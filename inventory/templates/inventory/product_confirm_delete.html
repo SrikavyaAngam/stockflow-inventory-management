@@ -1,0 +1,149 @@
+
+{% extends "inventory/base.html" %}
+
+{% block title %}Delete Product - StockFlow{% endblock %}
+
+{% block content %}
+
+<style>
+    .delete-wrapper {
+        max-width: 550px;
+        margin: 50px auto;
+    }
+
+    .delete-card {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border-top: 5px solid #dc2626;
+    }
+
+    .warning-icon {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fee2e2;
+        color: #dc2626;
+        border-radius: 50%;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .delete-card h2 {
+        color: #991b1b;
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    .delete-card p {
+        color: #475569;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+
+    .product-name {
+        color: #1e293b;
+        font-weight: bold;
+        overflow-wrap: anywhere;
+    }
+
+    .warning-text {
+        color: #dc2626 !important;
+        font-size: 14px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .delete-actions {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .delete-btn {
+        padding: 12px 22px;
+        background: #dc2626;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .delete-btn:hover {
+        background: #b91c1c;
+    }
+
+    .cancel-btn {
+        display: inline-block;
+        padding: 12px 22px;
+        background: #e2e8f0;
+        color: #334155;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .cancel-btn:hover {
+        background: #cbd5e1;
+    }
+
+    @media (max-width: 500px) {
+        .delete-card {
+            padding: 25px 18px;
+        }
+
+        .delete-card h2 {
+            font-size: 23px;
+        }
+
+        .delete-actions form,
+        .delete-actions button,
+        .delete-actions a {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="delete-wrapper">
+    <div class="delete-card">
+
+        <div class="warning-icon">!</div>
+
+        <h2>Delete Product</h2>
+
+        <p>
+            Are you sure you want to delete
+            <span class="product-name">"{{ product.name }}"</span>?
+        </p>
+
+        <p class="warning-text">
+            This action cannot be undone. The product will be permanently deleted.
+        </p>
+
+        <div class="delete-actions">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">
+                    Yes, Delete
+                </button>
+            </form>
+
+            <a href="{% url 'product_list' %}" class="cancel-btn">
+                Cancel
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

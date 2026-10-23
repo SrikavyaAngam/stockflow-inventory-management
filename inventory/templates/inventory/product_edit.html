@@ -1,0 +1,164 @@
+
+{% extends "inventory/base.html" %}
+
+{% block title %}Edit Product - StockFlow{% endblock %}
+
+{% block content %}
+
+<style>
+    .edit-wrapper {
+        max-width: 700px;
+        margin: 30px auto;
+    }
+
+    .edit-card {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border-top: 5px solid #2563eb;
+    }
+
+    .edit-card h2 {
+        color: #1e40af;
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .edit-description {
+        color: #64748b;
+        margin-bottom: 25px;
+        line-height: 1.6;
+    }
+
+    .edit-card form p {
+        margin-bottom: 18px;
+    }
+
+    .edit-card form label {
+        display: block;
+        margin-bottom: 8px;
+        color: #374151;
+        font-weight: bold;
+    }
+
+    .edit-card input,
+    .edit-card textarea,
+    .edit-card select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .edit-card input:focus,
+    .edit-card textarea:focus,
+    .edit-card select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .edit-card textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .edit-card .helptext {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    .edit-card .errorlist {
+        color: #dc2626;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .edit-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .update-btn {
+        padding: 13px 22px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .update-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .back-btn {
+        display: inline-block;
+        padding: 13px 22px;
+        background: #e2e8f0;
+        color: #334155;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .back-btn:hover {
+        background: #cbd5e1;
+    }
+
+    @media (max-width: 600px) {
+        .edit-card {
+            padding: 22px;
+        }
+
+        .edit-card h2 {
+            font-size: 23px;
+        }
+
+        .edit-actions button,
+        .edit-actions a {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="edit-wrapper">
+    <div class="edit-card">
+
+        <h2>Edit Product</h2>
+
+        <p class="edit-description">
+            Update your product information and save your changes.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="edit-actions">
+                <button type="submit" class="update-btn">
+                    Update Product
+                </button>
+
+                <a href="{% url 'product_list' %}" class="back-btn">
+                    Back to Products
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

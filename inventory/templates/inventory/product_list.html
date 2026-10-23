@@ -1,0 +1,225 @@
+
+{% extends "inventory/base.html" %}
+
+{% block title %}Products - StockFlow{% endblock %}
+
+{% block content %}
+
+<style>
+    .products-page {
+        padding: 10px 0 30px;
+    }
+
+    .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .products-header h1 {
+        color: #1e40af;
+        font-size: 30px;
+        margin: 0;
+    }
+
+    .products-header p {
+        color: #64748b;
+        margin-top: 8px;
+    }
+
+    .add-product-btn {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        text-decoration: none;
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .add-product-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .products-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+
+    .products-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 650px;
+    }
+
+    .products-table thead {
+        background: #eff6ff;
+    }
+
+    .products-table th {
+        color: #1e40af;
+        font-size: 14px;
+        text-align: left;
+        padding: 16px;
+        white-space: nowrap;
+    }
+
+    .products-table td {
+        padding: 16px;
+        border-bottom: 1px solid #e5e7eb;
+        color: #374151;
+    }
+
+    .products-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .product-name {
+        font-weight: bold;
+        color: #1f2937;
+    }
+
+    .quantity-badge {
+        display: inline-block;
+        background: #dbeafe;
+        color: #1d4ed8;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .price {
+        color: #15803d;
+        font-weight: bold;
+    }
+
+    .empty-products {
+        text-align: center;
+        padding: 35px 15px !important;
+        color: #64748b !important;
+    }
+
+    .back-link {
+        display: inline-block;
+        margin-top: 22px;
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .products-header h1 {
+            font-size: 25px;
+        }
+
+        .products-card {
+            padding: 15px;
+        }
+
+        .add-product-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="products-page">
+
+    <div class="products-header">
+        <div>
+            <h1>Product List</h1>
+            <p>View and manage your inventory products.</p>
+        </div>
+
+        <a href="{% url 'product_create' %}" class="add-product-btn">
+            + Add Product
+        </a>
+    </div>
+
+    <div class="products-card">
+        <div class="table-responsive">
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>SKU</th>
+                        <th>Quantity</th>
+                        <th>Cost Price</th>
+                        <th>Selling Price</th>
+                        <th>Stock Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td class="product-name">{{ product.name }}</td>
+                        <td>{{ product.sku }}</td>
+                        <td>
+                            <span class="quantity-badge">
+                                {{ product.quantity }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if product.cost_price != None %}
+                                ₹{{ product.cost_price|floatformat:2 }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td class="price">
+                            {% if product.selling_price != None %}
+                                ₹{{ product.selling_price|floatformat:2 }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if product.is_low_stock %}
+                                <span style="color:#dc2626;font-weight:bold;">
+                                    Low Stock
+                                </span>
+                            {% else %}
+                                <span style="color:#15803d;font-weight:bold;">
+                                    In Stock
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-products">
+                            <h3>No Products Found</h3>
+                            <p>Add your first product to get started.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

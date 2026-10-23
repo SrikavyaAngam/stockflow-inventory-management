@@ -1,0 +1,165 @@
+
+
+{% extends "inventory/base.html" %}
+
+{% block title %}{{ title }} - StockFlow{% endblock %}
+
+{% block content %}
+
+<style>
+    .product-form-wrapper {
+        max-width: 700px;
+        margin: 30px auto;
+    }
+
+    .product-form-card {
+        background: #ffffff;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border-top: 5px solid #2563eb;
+    }
+
+    .product-form-card h2 {
+        color: #1e40af;
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .form-description {
+        color: #64748b;
+        margin-bottom: 25px;
+    }
+
+    .product-form-card form p {
+        margin-bottom: 18px;
+    }
+
+    .product-form-card form label {
+        display: block;
+        font-weight: bold;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+
+    .product-form-card input,
+    .product-form-card textarea,
+    .product-form-card select {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .product-form-card input:focus,
+    .product-form-card textarea:focus,
+    .product-form-card select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .product-form-card textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    .product-form-card .helptext {
+        display: block;
+        margin-top: 6px;
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    .product-form-card .errorlist {
+        color: #dc2626;
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 25px;
+    }
+
+    .save-product-btn {
+        background: #2563eb;
+        color: white;
+        padding: 12px 22px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .save-product-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .cancel-product-btn {
+        display: inline-block;
+        padding: 12px 22px;
+        background: #e2e8f0;
+        color: #334155;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    .cancel-product-btn:hover {
+        background: #cbd5e1;
+    }
+
+    @media (max-width: 600px) {
+        .product-form-card {
+            padding: 22px;
+        }
+
+        .product-form-card h2 {
+            font-size: 23px;
+        }
+
+        .form-actions a,
+        .form-actions button {
+            width: 100%;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="product-form-wrapper">
+    <div class="product-form-card">
+
+        <h2>{{ title|default:"Add Product" }}</h2>
+
+        <p class="form-description">
+            Enter the product details below to manage your inventory.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="form-actions">
+                <button type="submit" class="save-product-btn">
+                    Save Product
+                </button>
+
+                <a href="{% url 'product_list' %}"
+                   class="cancel-product-btn">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
